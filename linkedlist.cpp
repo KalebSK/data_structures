@@ -7,11 +7,16 @@ class Node {
     public:
         Node* next = nullptr;
 
-        Node(int v) {
+        Node(const int &v) {
             value = v;
         };
 
-        int getValue() {
+        ~Node() {
+            next = nullptr;
+            value = 0;
+        }
+
+        const int& getValue() {
             return value;
         };
 
@@ -27,11 +32,26 @@ class LinkedList {
             return head = n;
         };
 
+        Node* clear(Node* n) {
+            if(n == nullptr) return nullptr;
+            clear(n->next);
+            n->next = nullptr;
+            return nullptr;
+        }
+
     public:
+
         Node* head = nullptr;
+
         LinkedList(Node* n) {
             head = n;
         };
+
+        LinkedList() {}
+
+        ~LinkedList() {
+            head = clear(head);
+        }
 
         Node* insertNode(Node* n, int index) {
             if(index == 0) {
